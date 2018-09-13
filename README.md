@@ -1,6 +1,6 @@
 snow-line-bot
 =============
 
-ƒtƒŒƒ“ƒh’Ç‰Á—pƒR[ƒh
+ãƒ•ãƒ¬ãƒ³ãƒ‰è¿½åŠ ç”¨ã‚³ãƒ¼ãƒ‰
 --------------------
 ![QR Code](https://github.com/yonezawahr/snow-line-bot/blob/master/QRCode.png)
