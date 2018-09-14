@@ -1,12 +1,11 @@
 package com.webcabi.snowlinebot;
 
-import java.lang.InterruptedException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.PushMessage;
@@ -33,7 +32,7 @@ public class SNowLineBotController {
 	@RequestMapping("/alerm")
 	public void pushAlarm() {
         try {
-            lineMessagingClient.pushMessage(new PushMessage("ユーザID",
+            lineMessagingClient.pushMessage(new PushMessage("U70dfcc7f9934b89ba929fc857d657358",
                                                 new TemplateMessage("明日は燃えるごみの日だよ！",
                                                     new ConfirmTemplate("ごみ捨ては終わった？",
                                                         new MessageAction("はい", "はい"),
@@ -57,7 +56,7 @@ public class SNowLineBotController {
 			}
 		};
         try {
-            lineMessagingClient.pushMessage(new PushMessage("Uef8ec22beca510e31a4b9130df7830db",
+            lineMessagingClient.pushMessage(new PushMessage("U70dfcc7f9934b89ba929fc857d657358",
                                                 new TemplateMessage("イベント情報",
                                                 	new ButtonsTemplate("https://gitlab.com/uploads/-/system/user/avatar/374710/avatar.png", "Title", "Text", actions)
                                                 )
