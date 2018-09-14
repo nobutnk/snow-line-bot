@@ -1,10 +1,14 @@
 package com.webcabi.snowlinebot;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.linecorp.bot.client.LineMessagingClient;
@@ -14,11 +18,18 @@ import com.linecorp.bot.model.action.MessageAction;
 import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.template.ButtonsTemplate;
 import com.linecorp.bot.model.message.template.ConfirmTemplate;
+import com.webcabi.snowlinebot.api.connect.ConnectChatApi;
 
 @RestController
 public class SNowLineBotController {
 
 	private final LineMessagingClient lineMessagingClient;
+	
+	@Autowired
+	private ConnectChatApi connectApi;
+	
+	@Value("${line.userId}")
+	private String userId;
 	
     SNowLineBotController(LineMessagingClient lineMessagingClient) {
         this.lineMessagingClient = lineMessagingClient;
@@ -29,6 +40,24 @@ public class SNowLineBotController {
 		return "Hello, World!";
 	}
 
+	@RequestMapping("snow/get")
+	public void getsnow() {
+		try {
+			connectApi.get(null);
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("snow/post")
+	public void postsnow(@RequestParam("message") String message) {
+		try {
+			connectApi.post(message);
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@RequestMapping("/alerm")
 	public void pushAlarm() {
         try {
