@@ -19,6 +19,7 @@ import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.template.ButtonsTemplate;
 import com.linecorp.bot.model.message.template.ConfirmTemplate;
 import com.webcabi.snowlinebot.api.connect.ConnectChatApi;
+import com.webcabi.snowlinebot.api.table.TableApi;
 
 @RestController
 public class SNowLineBotController {
@@ -27,6 +28,9 @@ public class SNowLineBotController {
 	
 	@Autowired
 	private ConnectChatApi connectApi;
+	
+	@Autowired
+	private TableApi tableApi;
 	
 	@Value("${line.userId}")
 	private String userId;
@@ -53,6 +57,15 @@ public class SNowLineBotController {
 	public void postsnow(@RequestParam("message") String message) {
 		try {
 			connectApi.post(message);
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("/snow/lineids")
+	public void lineids() {
+		try {
+			tableApi.getLineId();
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
