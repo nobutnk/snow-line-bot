@@ -10,4 +10,5 @@ import lombok.Setter;
 public class InviteRequest implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String datetime;
+	private String sysId;
 }
