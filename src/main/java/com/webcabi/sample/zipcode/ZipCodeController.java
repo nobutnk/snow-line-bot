@@ -3,6 +3,7 @@ package com.webcabi.sample.zipcode;
 import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +21,9 @@ import com.webcabi.snowlinebot.service.ZipCodeService;
 public class ZipCodeController {
 
 	private final LineMessagingClient lineMessagingClient;
+	
+	@Value("${line.userId}")
+	private String userId;
 	
 	@Autowired
 	private ZipCodeService zipCodeService;
@@ -42,7 +46,7 @@ public class ZipCodeController {
 		    address = res.getResults().get(0).getAddress1() + res.getResults().get(0).getAddress2();
 		}
 		try {
-            lineMessagingClient.pushMessage(new PushMessage("U70dfcc7f9934b89ba929fc857d657358",
+            lineMessagingClient.pushMessage(new PushMessage(userId,
                                                 new TemplateMessage("都道府県",
                                                     new ConfirmTemplate(zipcode + "は" + address,
                                                         new MessageAction("はい", "はい"),
