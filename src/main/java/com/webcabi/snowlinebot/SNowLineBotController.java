@@ -142,6 +142,7 @@ public class SNowLineBotController {
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
+	}
 		
 	@RequestMapping(value = "/message",
 			        method = RequestMethod.POST,

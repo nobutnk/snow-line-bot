@@ -18,32 +18,32 @@ import com.linecorp.bot.model.response.BotApiResponse;
 
 @Service
 public class NotifyMessageHandler {
-	
+
 	private final LineMessagingClient lineMessagingClient;
-	
+
 	@Value("${yakiniku.url}")
 	private String yakinikuUrl;
-	
+
 	public NotifyMessageHandler(LineMessagingClient lineMessagingClient) {
 
-        this.lineMessagingClient = lineMessagingClient;
-    }
+		this.lineMessagingClient = lineMessagingClient;
+	}
 
-	public BotApiResponse reply(MessageEvent<TextMessageContent> event) throws IOException, InterruptedException, ExecutionException {
+	public BotApiResponse reply(MessageEvent<TextMessageContent> event)
+			throws IOException, InterruptedException, ExecutionException {
 
 		String receivedMessage = event.getMessage().getText();
 		String replyToken = event.getReplyToken();
-        List<Message> messages = null;
+		List<Message> messages = null;
 		switch (receivedMessage) {
 		case "焼肉食べたい":
-				messages = Arrays.asList(
-						new TextMessage("イイね！"),
-						new TextMessage(yakinikuUrl));
+		case "焼き肉食べたい":
+			messages = Arrays.asList(new TextMessage("イイね！"), new TextMessage(yakinikuUrl));
+		default:
+			messages = Arrays.asList(new TextMessage("accept"));
 		}
-		
-		return lineMessagingClient
-	            .replyMessage(new ReplyMessage(replyToken, messages))
-	            .get();
+
+		return lineMessagingClient.replyMessage(new ReplyMessage(replyToken, messages)).get();
 	}
 
 }
