@@ -19,6 +19,7 @@ import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.template.ButtonsTemplate;
 import com.linecorp.bot.model.message.template.ConfirmTemplate;
 import com.webcabi.snowlinebot.api.connect.ConnectChatApi;
+import com.webcabi.snowlinebot.api.linepaymock.LinePayMock;
 import com.webcabi.snowlinebot.api.table.TableApi;
 
 @RestController
@@ -31,6 +32,9 @@ public class SNowLineBotController {
 	
 	@Autowired
 	private TableApi tableApi;
+	
+	@Autowired
+	private LinePayMock linePayMock;
 	
 	@Value("${line.userId}")
 	private String userId;
@@ -74,7 +78,7 @@ public class SNowLineBotController {
 	@RequestMapping("/alerm")
 	public void pushAlarm() {
         try {
-            lineMessagingClient.pushMessage(new PushMessage("U70dfcc7f9934b89ba929fc857d657358",
+            lineMessagingClient.pushMessage(new PushMessage(userId,
                                                 new TemplateMessage("明日は燃えるごみの日だよ！",
                                                     new ConfirmTemplate("ごみ捨ては終わった？",
                                                         new MessageAction("はい", "はい"),
@@ -98,7 +102,7 @@ public class SNowLineBotController {
 			}
 		};
         try {
-            lineMessagingClient.pushMessage(new PushMessage("U70dfcc7f9934b89ba929fc857d657358",
+            lineMessagingClient.pushMessage(new PushMessage(userId,
                                                 new TemplateMessage("イベント情報",
                                                 	new ButtonsTemplate("https://gitlab.com/uploads/-/system/user/avatar/374710/avatar.png", "Title", "Text", actions)
                                                 )
@@ -107,4 +111,34 @@ public class SNowLineBotController {
             throw new RuntimeException(e);
         }
     }
+	
+	@RequestMapping("/calc")
+	public void calc(@RequestParam("amount") String amount) {
+		
+		try {
+			List<String> lineIds = tableApi.getLineId();
+			int result = linePayMock.splitBill(lineIds.size(), Integer.parseInt(amount));
+			System.out.println(result);
+			
+			try {
+				for (String lineId : lineIds) {
+	            lineMessagingClient.pushMessage(new PushMessage(lineId,
+	                                                new TemplateMessage("飲み会代金額",
+	                                                    new ConfirmTemplate("飲み会代は" + amount + " 円だったよ。払ってくれるよね？",
+	                                                        new MessageAction("はい", result + "円だよ"),
+	                                                        new MessageAction("いいえ", "残念だよ")
+	                                                    )
+	                                                )
+	                                            )).get();
+				}
+	        } catch (InterruptedException | ExecutionException e) {
+	            throw new RuntimeException(e);
+	        }
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
 }
