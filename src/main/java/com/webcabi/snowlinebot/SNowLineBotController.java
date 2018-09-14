@@ -148,17 +148,7 @@ public class SNowLineBotController {
 			        method = RequestMethod.POST,
 			        consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void sendMessage(@RequestBody MessageRequest request) throws Exception {
-		List<String> users = new ArrayList<String>() {
-			private static final long serialVersionUID = 1L;
-
-			{
-				add("Uef8ec22beca510e31a4b9130df7830db");
-				add("U096871bbdcf5f3762d56f9e812bba482");
-				add("U80f7dbdf2a6b27a95b3b522261b779df");
-				add("U7d53343510f879ec9f655efbce371f2d");
-				add("U1e55466292f8c6abfb15ed30b127bb72");
-			}
-		};
+		List<String> lineIds = tableApi.getLineId();
 		
         try {
             for (String user : users) {
@@ -175,16 +165,7 @@ public class SNowLineBotController {
 					method = RequestMethod.POST,
 					consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void sendMessage(@RequestBody InviteRequest request) throws Exception {
-		List<String> users = new ArrayList<String>() {
-			private static final long serialVersionUID = 1L;
-			{
-				add("Uef8ec22beca510e31a4b9130df7830db");
-				add("U096871bbdcf5f3762d56f9e812bba482");
-				add("U80f7dbdf2a6b27a95b3b522261b779df");
-				add("U7d53343510f879ec9f655efbce371f2d");
-				add("U1e55466292f8c6abfb15ed30b127bb72");
-			}
-		};
+		List<String> lineIds = tableApi.getLineId();
 
 		try {
 			for (String user : users) {
@@ -204,16 +185,7 @@ public class SNowLineBotController {
 					method = RequestMethod.POST,
 					consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void sendTest(@RequestBody InviteRequest request) throws Exception {
-		List<String> users = new ArrayList<String>() {
-			private static final long serialVersionUID = 1L;
-			{
-				add("Uef8ec22beca510e31a4b9130df7830db");
-				add("U096871bbdcf5f3762d56f9e812bba482");
-				add("U80f7dbdf2a6b27a95b3b522261b779df");
-				add("U7d53343510f879ec9f655efbce371f2d");
-				add("U1e55466292f8c6abfb15ed30b127bb72");
-			}
-		};
+		List<String> lineIds = tableApi.getLineId();
 
 		try {
 			for (String user : users) {
